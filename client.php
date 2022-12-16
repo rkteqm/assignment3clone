@@ -102,11 +102,11 @@ if (isset($_SESSION['id']) && isset($_SESSION['client'])) {
                                 <td><img src="assets/images/' . $file . '" alt="" style="height:30px; width:50px"></td>
                                 <td><a href="view.php?id=' . $id . '">View</a></td>
                                 <td><a href="update.php?id=' . $id . '">Edit</a></td>
-                                <td><button class="remove btn btn-primary" value="' . $id . '">DeleteAjax</button></td>
                                 <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '">Delete</a></td>
                                 <td>
                                 </tr>
                                 ';
+                                // <td><button class="remove btn btn-primary" value="' . $id . '">DeleteAjax</button></td>
                             $sr += 1;
                         }
                     } elseif (isset($_SESSION['id'])) {

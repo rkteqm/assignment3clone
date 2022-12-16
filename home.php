@@ -1,6 +1,5 @@
 <?php
 require_once 'conn.php';
-if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
 ?>
     <!doctype html>
     <html lang="en">
@@ -20,40 +19,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
         <!----------------------------------- navbar -------------------------------------->
         <?php
         require_once 'navbar.php';
-
-        // <!----------------------------------- Success dismissible alert for update -------------------------------------->
-        $success = 0;
-        $success = $_GET['success'];
-        if ($success == 1) {
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <span>Data updated successfully</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php
-        }
-        // <!----------------------------------- Success dismissible alert for login -------------------------------------->
-        $loginsuccess = 0;
-        $loginsuccess = $_GET['loginsuccess'];
-        if ($loginsuccess == 1) {
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <span>Logged in successfully</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php
-        }
-        // <!----------------------------------- Success dismissible alert for delete -------------------------------------->
-        $deletesuccess = 0;
-        $deletesuccess = $_GET['deletesuccess'];
-        if ($deletesuccess == 1) {
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <span>Data deleted successfully</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php
-        }
         ?>
         <span class="removesuccess"></span>
         <!----------------------------------- users table -------------------------------------->
@@ -69,14 +34,11 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                         <th scope="col">Gender</th>
                         <th scope="col">Image</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM `users` WHERE `soft_delete` = '1' AND `user_type` = '1'";
+                    $sql = "SELECT * FROM `users` WHERE `soft_delete` = '1' AND `user_type` = '1' ";
                     $result = mysqli_query($conn, $sql);
                     $num = mysqli_num_rows($result);
                     if ($num > 0) {
@@ -100,12 +62,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                                 <td>' . $gender . '</td>
                                 <td><img src="assets/images/' . $file . '" alt="" style="height:30px; width:50px"></td>
                                 <td><a href="view.php?id=' . $id . '">View</a></td>
-                                <td><a href="update.php?id=' . $id . '">Edit</a></td>
-                                <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '">Delete</a></td>
-                                <td>
                                 </tr>
                                 ';
-                                // <td><button class="remove btn btn-primary" value="'. $id .'">DeleteAjax</button></td>
                             $sr += 1;
                         }
                     }
@@ -127,8 +85,3 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
     </body>
 
     </html>
-<?php
-} else {
-    header("location: login.php");
-}
-?>

@@ -1,7 +1,6 @@
 <?php
 
 require_once 'conn.php';
-if (isset($_SESSION['id']) && isset($_GET['id'])) {
 
     $id = $_GET['id'];
     $sql = "SELECT * FROM `users` WHERE `id` = '$id' AND `soft_delete` = '1'";
@@ -79,22 +78,24 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
                     </div>
                     <span class="error" id="genderErr" name="genderErr"> *<?php echo $genderErr; ?> </span>
                 </div>
-                <?php
-                if(isset($_SESSION['admin'])){
-                ?>
                 <div class="col-12">
-                    <a href="users.php">Back</a>
+                    <?php
+                    if (isset($_SESSION['admin'])) {
+                    ?>
+                        <a href="users.php">Back</a>
+                    <?php
+                    }
+                    if (isset($_SESSION['client'])) {
+                    ?>
+                        <a href="client.php">Back</a>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="home.php">Back</a>
+                    <?php
+                    }
+                    ?>
                 </div>
-                <?php
-                }
-                if(isset($_SESSION['client'])){
-                ?>
-                <div class="col-12">
-                    <a href="client.php">Back</a>
-                </div>
-                <?php
-                }
-                ?>
             </form>
         </div>
 
@@ -111,8 +112,3 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
     </body>
 
     </html>
-<?php
-} else {
-    header("location: login.php");
-}
-?>
