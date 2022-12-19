@@ -84,8 +84,7 @@ require_once 'conn.php';
                     ?>
                         <a href="users.php">Back</a>
                     <?php
-                    }
-                    if (isset($_SESSION['client'])) {
+                    }else if (isset($_SESSION['client'])) {
                     ?>
                         <a href="client.php">Back</a>
                     <?php
