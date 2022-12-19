@@ -79,7 +79,7 @@ require_once 'conn.php';
                     { mData: "id",
                         "orderable": false,
                         "searchable": false,
-                        "render": function(mData,type,row,meta) { // render event defines the markup of the cell text 
+                        "render": function(data,type,row,meta) { // render event defines the markup of the cell text 
                             var a = '<td><a href="view.php?id=' + row.id + '">View</a></td>'; // row object contains the row data
                             return a;
                         }

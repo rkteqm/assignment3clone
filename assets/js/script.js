@@ -132,7 +132,7 @@ $(document).ready(function () {
 
         if (errorcheck == 0) {
 
-            // for normal form submission
+            // ******************for normal form submission************************
             // e.preventDefault();
             // $.ajax({
             //     url: 'registerprocess.php',
@@ -144,7 +144,7 @@ $(document).ready(function () {
             //     }
             // });
 
-            // for file submission
+            // ********************for file submission****************************
             e.preventDefault();
 
             var formData = new FormData();
@@ -306,11 +306,9 @@ function confirmation() {
     }
 }
 
-function myreset() {
-    var removeinput = document.getElementsByClassName('form-control');
-    console.log('1111');
-    for (i = 0; i < removeinput.length; i++) {
-        removeinput[i].value = "";
-    }
-
-}
+// function myreset() {
+//     var removeinput = document.getElementsByClassName('form-control');
+//     for (i = 0; i < removeinput.length; i++) {
+//         removeinput[i].value = "";
+//     }
+// }
