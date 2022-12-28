@@ -25,7 +25,17 @@ class Users
         $table_value = implode("','", $para);
 
         $sql = "INSERT INTO $table($table_columns) VALUES('$table_value')";
-        $result = $this->mysqli->query($sql);
+        $this->sql = $result = $this->mysqli->query($sql);
+    }
+
+    public function insertResetId($table, $para = array())
+    {
+        $table_columns = implode(',', array_keys($para));
+        $table_value = implode("','", $para);
+
+        $sql = "INSERT INTO $table($table_columns) VALUES('$table_value')";
+        $this->sql = $result = $this->mysqli->query($sql);
+        echo mysqli_error($this->mysqli);
     }
 
     public function update($table, $para = array(), $id)
@@ -95,6 +105,22 @@ class Users
         echo mysqli_error($this->mysqli);
     }
 
+    public function updateResetId($table, $para = array(), $id)
+    {
+        $table = $table;
+        $flag = $para['flag'];
+        $sql = "UPDATE $table SET `flag`='$flag' WHERE `reset_id`='$id' ";
+        $this->sql = $result = $this->mysqli->query($sql);
+
+        echo mysqli_error($this->mysqli);
+    }
+
+    public function getResetId($table, $rows = "*", $id)
+    {
+        $sql = "SELECT $rows FROM $table WHERE `reset_id` = $id AND `flag` = 1";
+        $this->sql = $result = $this->mysqli->query($sql);
+    }
+
     public function emailExist($table, $para = array())
     {
         $table = $table;
@@ -106,5 +132,31 @@ class Users
     public function __destruct()
     {
         $this->mysqli->close();
+    }
+}
+
+class Auth
+{
+    protected function valideUser()
+    {
+        if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
+            return true;
+        }
+    }
+}
+class User extends Auth
+{
+    function valideUser()
+    {
+        if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
+            return true;
+        }
+    }
+
+    function validClient()
+    {
+        if (isset($_SESSION['id']) && isset($_SESSION['client'])) {
+            return true;
+        }
     }
 }

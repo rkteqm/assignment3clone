@@ -16,10 +16,6 @@ if (isset($_POST['email'])) {
     }
 
     if ($errorcheck == 0) {
-        // $sql = " SELECT * FROM `users` WHERE `email` = '$email'";
-        // $result = mysqli_query($conn, $sql);
-        // $num = mysqli_num_rows($result);
-        // $email = trim($_POST['email']);
         $ee = new Users();
         $ee->emailExist('users', ['email' => $email]);
         $result = $ee->sql;

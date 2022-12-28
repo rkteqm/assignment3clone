@@ -1,7 +1,11 @@
 <?php
 require_once 'conn.php';
-if ($_SESSION['rid'] == $_REQUEST['id']) {
-    $id = $_GET['id'];
+$id = $_REQUEST['id'];
+$g = new Users();
+$g->getResetId('reset', '*', $id);
+$result = $g->sql;
+$num = mysqli_num_rows($result);
+if ($num > 0) {
 } else {
     header("location: login.php");
 }
@@ -24,15 +28,17 @@ if (isset($_POST['reset'])) {
         $errorcheck = 1;
     }
     if ($errorcheck == 0) {
-        // $sql = "UPDATE `users` SET `password` = md5('$password') where `id` = '$id'";
-        // $result = mysqli_query($conn, $sql);
 
         $r = new Users();
         $r->reset('users', ['password' => $password], $id);
         $result = $r->sql;
-
         if ($result) {
-            header("location: logout.php");
+            $u = new Users();
+            $u->updateResetId('reset', ['flag' => 0], $id);
+            $result = $u->sql;
+            if ($result) {
+                header("location: logout.php");
+            }
         }
     }
 }

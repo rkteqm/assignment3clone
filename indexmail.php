@@ -27,20 +27,12 @@ $mail->SMTPSecure = "tls";
 //Set TCP port to connect to
 $mail->Port = 587;
 
-// $my_path = '../uploads/test.jpeg';
-// if (!file_exists($my_path)) {
-//     //Provide file path and name of the attachments
-//     die("File Not Exist!");
-// }
-// $mail->addAttachment($my_path, "File.php");
 $mail->From = "rkteqm@gmail.com";
 $mail->FromName = "Rahul";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $id = $_POST['id'];
-    // echo $email;
-    // echo $id;
 
     $mail->addAddress($email, "TEST");
 

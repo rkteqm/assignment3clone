@@ -1,6 +1,8 @@
 <?php
 require_once 'conn.php';
-if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
+$admin = new User();
+if ($admin->valideUser() == true) {
+
 
 ?>
     <!doctype html>
@@ -14,6 +16,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="./assets/js/script.js"></script>
     </head>
 
@@ -26,34 +29,34 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
         $success = 0;
         $success = $_GET['success'];
         if ($success == 1) {
-            ?>
+        ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span>Data updated successfully</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php
+        <?php
         }
         // <!----------------------------------- Success dismissible alert for login -------------------------------------->
         $loginsuccess = 0;
         $loginsuccess = $_GET['loginsuccess'];
         if ($loginsuccess == 1) {
-            ?>
+        ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span>Logged in successfully</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php
+        <?php
         }
         // <!----------------------------------- Success dismissible alert for delete -------------------------------------->
         $deletesuccess = 0;
         $deletesuccess = $_GET['deletesuccess'];
         if ($deletesuccess == 1) {
-            ?>
+        ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <span>Data deleted successfully</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php
+        <?php
         }
         ?>
         <span class="removesuccess"></span>
@@ -78,7 +81,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                 <tbody>
                     <?php
                     $b = new Users();
-                    $b->select("users","*");
+                    $b->select("users", "*");
                     $result = $b->sql;
                     $num = mysqli_num_rows($result);
                     if ($num > 0) {
@@ -101,9 +104,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                                 <td>' . $phone . '</td>
                                 <td>' . $gender . '</td>
                                 <td><img src="assets/images/' . $file . '" alt="" style="height:30px; width:50px"></td>
-                                <td><a href="view.php?id=' . $id . '">View</a></td>
-                                <td><a href="update.php?id=' . $id . '">Edit</a></td>
-                                <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '">Delete</a></td>
+                                <td><a href="view.php?id=' . $id . '"><i class="fa-solid fa-eye"></i></a></td>
+                                <td><a href="update.php?id=' . $id . '"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '"><i class="fa-solid fa-trash"></i></a></td>
                                 <td>
                                 </tr>
                                 ';

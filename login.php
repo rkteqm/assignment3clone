@@ -1,7 +1,6 @@
 <?php
 
 require_once 'conn.php';
-
 // define variables
 $email = $password = "";
 $emailErr = $passwordErr = $validErr = "";
@@ -108,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
       <div class="col-12">
         <button type="submit" name="login" id="login" class="btn btn-primary">Login</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Forgot Password</button>
+        <button type="button" class="btn btn-primary" id="fp" data-bs-toggle="modal" data-bs-target="#myModal">Forgot Password</button>
         <!-- <a href="" class="forgot">Forgot Password</a> -->
       </div>
     </form>
@@ -175,6 +174,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           return false
         }
       });
+      $('#fp').click(function(){
+        email = $('#email').val();
+        email = email.trim();
+        $('#emailf').val(email);
+      });
       $('#forgot').click(function() {
         errorcheck = 0;
         email = $('#emailf').val();
@@ -196,6 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               email: email
             }),
             success: function(respone) {
+
               if (respone == 0) {
                 $('#emailErrf').html("Your email is not register");
               } else {
@@ -207,10 +212,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   "background-position": "center"
                 });
                 sendMail(id, email);
+                iresetid(id);
               }
             }
           });
           // alert(email);
+          return false;
+        }else{
           return false;
         }
       });
@@ -234,13 +242,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       });
     }
-
-    function ajaxStart() {
-      $("body").addClass("loading");
-    }
-
-    function ajaxStop() {
-      $("body").removeClass("loading");
+    function iresetid(id) {
+      $.ajax({
+        url: 'insertresetid.php',
+        type: 'post',
+        data: ({
+          id: id
+        }),
+        success: function(respone) {
+        }
+      });
     }
   </script>
   <!-- Optional JavaScript; choose one of the two! -->

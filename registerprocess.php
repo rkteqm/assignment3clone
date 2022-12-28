@@ -113,13 +113,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($errorcheck == 0) {
-        // insertion data in database 
-        // $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, gender, file, created_date, modified_date) 
-        // VALUES ('$fname','$lname','$email','$phone',md5('$password'),'$gender', '$file', '$created_date', '$modified_date') ";
-        // $result = mysqli_query($conn, $sql);
         $a = new Users();
         $a->insert('users', ['first_name' => $fname, 'last_name' => $lname, 'email' => $email, 'phone_number' => $phone, 'password' => md5($password), 'gender' => $gender, 'file' => $file, 'created_date' => $created_date, 'modified_date' => $modified_date]);
-        if ($a == true){
+        $result = $a->sql;
+        if ($result){
             // file moving in upload folder
             move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
         echo '

@@ -45,15 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // first name validation
     $fname = trim($_POST['fname']);
     if (empty($fname)) {
-        // $fnameErr = "Please enter your first name";
         echo "Please enter your first name";
         $errorcheck = 1;
     } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $fname)) {
-        // $fnameErr = "Please enter characters only";
         echo "Please enter characters only";
         $errorcheck = 1;
     } else if (strlen($fname) < 3) {
-        // $fnameErr = "Please enter at least 3 characters";
         echo "Please enter at least 3 characters";
         $errorcheck = 1;
     }
@@ -61,15 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // last name validation
     $lname = trim($_POST['lname']);
     if (empty($lname)) {
-        // $lnameErr = "Please enter your last name";
         echo "Please enter your last name";
         $errorcheck = 1;
     } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $lname)) {
-        // $lnameErr = "Please enter characters only";
         echo "Please enter characters only";
         $errorcheck = 1;
     } else if (strlen($lname) < 3) {
-        // $lnameErr = "Please enter at least 3 characters";
         echo "Please enter at least 3 characters";
         $errorcheck = 1;
     }
@@ -82,16 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $num = mysqli_num_rows($result);
     $num = mysqli_num_rows($result);
     if (empty($email)) {
-        // $emailErr = "Please enter your email";
         echo "Please enter your email";
         $errorcheck = 1;
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // $emailErr = "Please enter valid email";
         echo "Please enter valid email";
         $errorcheck = 1;
     } elseif ($email != $email2) {
         if ($num == 1) {
-            // $emailErr = "Email already exist";
             echo "emailerror";
             $errorcheck = 1;
         }
@@ -105,11 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Please enter your phone number";
         $errorcheck = 1;
     } elseif (!is_numeric($phone)) {
-        // $phoneErr = "Please enter numeric only";
         echo "Please enter numeric only";
         $errorcheck = 1;
     } elseif (strlen($phone) != 10) {
-        // $phoneErr = "Enter 10 digit only";
         echo "Enter 10 digit only";
         $errorcheck = 1;
     }
