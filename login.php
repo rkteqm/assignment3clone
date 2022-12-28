@@ -88,6 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <?php
   }
   ?>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" id="resetmessage" style="display: none;">
+    <span>Reset link has been sent to your email</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
   <div class="container mt-5 form">
     <h1>Please Login Here</h1>
     <hr><br>
@@ -130,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="forgot-back-btn" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" id="forgot">Send link</button>
           </div>
         </form>
@@ -139,9 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 
-  <div class="container">
-    <div class="test"></div>
-  </div>
   <script>
     $(document).ready(function() {
       var validRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -199,8 +200,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $('#emailErrf').html("Your email is not register");
               } else {
                 id = respone;
+                $("body").css({
+                  "background-image": "url('loader.gif')",
+                  "background-repeat": "no-repeat",
+                  "background-attachment": "fixed",
+                  "background-position": "center"
+                });
                 sendMail(id, email);
-                $('.test').html("Reset link has been sent to your email");
               }
             }
           });
@@ -219,8 +225,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           id: id,
           email: email
         }),
-        success: function(respone) {}
+        success: function(respone) {
+          $("body").css({
+            "background-image": "url()"
+          });
+          $('#forgot-back-btn').trigger('click');
+          $('#resetmessage').show();
+        }
       });
+    }
+
+    function ajaxStart() {
+      $("body").addClass("loading");
+    }
+
+    function ajaxStop() {
+      $("body").removeClass("loading");
     }
   </script>
   <!-- Optional JavaScript; choose one of the two! -->

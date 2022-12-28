@@ -45,15 +45,12 @@ class Users
         $sql = "UPDATE `users` SET `first_name` = '$fname', `last_name` = '$lname', `email` = '$email', `phone_number` = '$phone', `gender` = '$gender', `file` = '$file', `modified_date` = '$modified_date' where `id` = '$id'";
         $this->sql = $result = $this->mysqli->query($sql);
         echo mysqli_error($this->mysqli);
-
     }
 
     public function delete($table, $id)
     {
-        $sql = "DELETE FROM $table";
-        $sql .= " WHERE $id ";
-        $sql;
-        $result = $this->mysqli->query($sql);
+        $sql = "UPDATE $table SET `soft_delete` = '0' WHERE `id` = $id";
+        $this->sql = $result = $this->mysqli->query($sql);
     }
 
     public $sql;
@@ -61,7 +58,7 @@ class Users
     public function select($table, $rows = "*", $where = null)
     {
         if ($where != null) {
-            $sql = "SELECT $rows FROM $table WHERE `id` = $where";
+            $sql = "SELECT $rows FROM $table WHERE `id` = $where AND `soft_delete` = '1' ";
         } else {
             $sql = "SELECT $rows FROM $table WHERE `soft_delete` = '1' AND `user_type` = '1'";
         }
@@ -72,7 +69,6 @@ class Users
     public function selectByEmail($table, $rows = "*", $where = null)
     {
         $sql = "SELECT $rows FROM $table WHERE `email` = '$where'";
-        // echo $sql;
         $this->sql = $result = $this->mysqli->query($sql);
     }
 
@@ -82,7 +78,7 @@ class Users
         $email = $para['email'];
         $password = $para['password'];
         $password = md5($password);
-        $sql = "SELECT * FROM $table WHERE `email`='$email' AND `password`='$password' ";
+        $sql = "SELECT * FROM $table WHERE `email`='$email' AND `password`='$password' AND `soft_delete` = '1' ";
         $this->sql = $result = $this->mysqli->query($sql);
 
         echo mysqli_error($this->mysqli);

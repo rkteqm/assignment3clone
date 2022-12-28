@@ -2,9 +2,11 @@
 
 require_once 'conn.php';
 if (isset($_SESSION['id']) && isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "UPDATE `users` SET `soft_delete` = '0' WHERE `id` = '$id'";
-    $result = mysqli_query($conn, $sql);
+    $id = $_REQUEST['id'];
+    $d = new Users();
+    $d->delete('users', $id);
+    $result = $d->sql;
+    
     if ($result) {
         if(isset($_SESSION['admin'])){
             header("location: users.php?deletesuccess=1");

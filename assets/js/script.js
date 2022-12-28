@@ -133,22 +133,6 @@ $(document).ready(function () {
         }
 
         if (errorcheck == 0) {
-
-            // ******************for normal form submission************************
-            // e.preventDefault();
-            // $.ajax({
-            //     url: 'registerprocess.php',
-            //     type: 'POST',
-            //     data: $(this).serialize(),
-            //     success: function (data) {
-            //         if (data == "emailerror") {
-            //             $('#emailErr').html("Email already exist");
-            //         } else {
-            //             window.location.href = "login.php";
-            //         }
-            //     }
-            // });
-
             // ********************for file submission****************************
             e.preventDefault();
 
