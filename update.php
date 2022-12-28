@@ -5,14 +5,14 @@ require_once 'conn.php';
 if (isset($_SESSION['id']) && isset($_GET['id'])) {
 
     $id = $_GET['id'];
-    $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-    $result = mysqli_query($conn, $sql);
+    $v = new Users();
+    $v->select("users","*", $id);
+    $result = $v->sql;
     $row = mysqli_fetch_row($result);
     $fname = $row[1];
     $lname = $row[2];
     $email2 = $row[3];
     $phone = $row[4];
-    $password = $row[5];
     $gender = $row[6];
     $file2 = $row[7];
 ?>
@@ -70,18 +70,18 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
                     <span class="error" id="phoneErr" name="phoneErr">*<?php echo $phoneErr; ?></span>
                     <input type="number" class="form-control" placeholder="Enter your phone number" value="<?php echo $phone; ?>" id="phone" name="phone">
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <label for="password" class="form-label">Password</label>
                     <a href="" id="showpassword" class="showhidefont"><i class="fa-solid fa-eye-slash"></i></a>
-                    <span class="error" id="passwordErr" name="passwordErr">*<?php echo $passwordErr; ?></span>
+                    <span class="error" id="passwordErr" name="passwordErr">*<?php //echo $passwordErr; ?></span>
                     <input type="password" class="form-control" placeholder="Enter your password" value="<?php echo $password; ?>" id="password" name="password">
                 </div>
                 <div class="col-md-6">
                     <label for="cpassword" class="form-label">Confirm Password</label>
                     <a href="" id="showcpassword" class="showhidefont"><i class="fa-solid fa-eye-slash"></i></a>
-                    <span class="error" id="cpasswordErr" name="cpasswordErr">*<?php echo $cpasswordErr; ?></span>
+                    <span class="error" id="cpasswordErr" name="cpasswordErr">*<?php //echo $cpasswordErr; ?></span>
                     <input type="password" class="form-control" placeholder="Enter your confirm password" value="<?php echo $password; ?>" id="cpassword" name="cpassword">
-                </div>
+                </div> -->
                 <div class="col-md-6">
                     <label for="gender" class="form-label">Gender</label>
                     <div class="form-check form-check-inline">

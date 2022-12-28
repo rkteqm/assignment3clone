@@ -3,8 +3,11 @@
 require_once 'conn.php';
 
     $id = $_GET['id'];
-    $sql = "SELECT * FROM `users` WHERE `id` = '$id' AND `soft_delete` = '1'";
-    $result = mysqli_query($conn, $sql);
+
+    $v = new Users();
+    $v->select("users","*", $id);
+    $result = $v->sql;
+
     $row = mysqli_fetch_row($result);
     $fname = $row[1];
     $lname = $row[2];

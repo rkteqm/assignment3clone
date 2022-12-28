@@ -1,6 +1,7 @@
 <?php
 require_once 'conn.php';
 if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
+
 ?>
     <!doctype html>
     <html lang="en">
@@ -76,8 +77,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM `users` WHERE `soft_delete` = '1' AND `user_type` = '1'";
-                    $result = mysqli_query($conn, $sql);
+                    $b = new Users();
+                    $b->select("users","*");
+                    $result = $b->sql;
                     $num = mysqli_num_rows($result);
                     if ($num > 0) {
                         $sr = 1;
@@ -105,7 +107,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['admin'])) {
                                 <td>
                                 </tr>
                                 ';
-                                // <td><button class="remove btn btn-primary" value="'. $id .'">DeleteAjax</button></td>
                             $sr += 1;
                         }
                     }

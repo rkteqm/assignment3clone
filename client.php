@@ -77,8 +77,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['client'])) {
                 <tbody>
                     <?php
                     $id = $_SESSION['id'];
-                    $sql = "SELECT * FROM `users` WHERE `id` = '$id' AND `soft_delete` = '1' ";
-                    $result = mysqli_query($conn, $sql);
+                    $b = new Users();
+                    $b->select("users","*",$id);
+                    $result = $b->sql;
                     $num = mysqli_num_rows($result);
                     if ($num > 0) {
                         $sr = 1;
@@ -106,7 +107,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['client'])) {
                                 <td>
                                 </tr>
                                 ';
-                                // <td><button class="remove btn btn-primary" value="' . $id . '">DeleteAjax</button></td>
                             $sr += 1;
                         }
                     } elseif (isset($_SESSION['id'])) {

@@ -1,5 +1,7 @@
 $(document).ready(function () {
+
     $('#form').submit(function (e) {
+
         errorcheck = 0;
 
         // Error removing if input is correct/valid
@@ -21,10 +23,6 @@ $(document).ready(function () {
         email2 = email2.trim();
         var phone = $("#phone").val();
         phone = phone.trim();
-        var password = $("#password").val();
-        password = password.trim();
-        var cpassword = $("#cpassword").val();
-        cpassword = cpassword.trim();
         var gender = "";
         var ele = document.getElementsByName('gender');
         for (i = 0; i < ele.length; i++) {
@@ -52,6 +50,25 @@ $(document).ready(function () {
                 $('#fileErr').html("Sorry, your file is greater than 50kb.");
                 errorcheck = 1;
             }
+            var password = $("#password").val();
+            password = password.trim();
+            var cpassword = $("#cpassword").val();
+            cpassword = cpassword.trim();
+            // password validation
+            if (password == "") {
+                $('#passwordErr').html("Please enter your password");
+                errorcheck = 1;
+            }
+
+            // confirm password validation
+            if (cpassword == "") {
+                $('#cpasswordErr').html("Please enter your confirm password");
+                errorcheck = 1;
+            } else if (cpassword != password) {
+                $('#cpasswordErr').html("confirm password not matched with password");
+                errorcheck = 1;
+            }
+
         } else {
             if (fileToUpload == "") {
 
@@ -109,21 +126,6 @@ $(document).ready(function () {
             errorcheck = 1;
         }
 
-        // password validation
-        if (password == "") {
-            $('#passwordErr').html("Please enter your password");
-            errorcheck = 1;
-        }
-
-        // confirm password validation
-        if (cpassword == "") {
-            $('#cpasswordErr').html("Please enter your confirm password");
-            errorcheck = 1;
-        } else if (cpassword != password) {
-            $('#cpasswordErr').html("confirm password not matched with password");
-            errorcheck = 1;
-        }
-
         // gender validation
         if (gender == "") {
             $('#genderErr').html("Please select your gender");
@@ -139,8 +141,11 @@ $(document).ready(function () {
             //     type: 'POST',
             //     data: $(this).serialize(),
             //     success: function (data) {
-            //         $('.test').html('');
-            //         $('.test').append(data);
+            //         if (data == "emailerror") {
+            //             $('#emailErr').html("Email already exist");
+            //         } else {
+            //             window.location.href = "login.php";
+            //         }
             //     }
             // });
 
@@ -153,11 +158,11 @@ $(document).ready(function () {
             formData.append('lname', lname);
             formData.append('email', email);
             formData.append('phone', phone);
-            formData.append('password', password);
-            formData.append('cpassword', cpassword);
             formData.append('gender', gender);
 
             if (mysubmit != "") {
+                formData.append('password', password);
+                formData.append('cpassword', cpassword);
                 $.ajax({
                     url: 'registerprocess.php',
                     type: 'POST',
@@ -182,8 +187,6 @@ $(document).ready(function () {
                         type: 'POST',
                         data: $('#form').serialize(),
                         success: function (data) {
-                            // $('.testupdate').html('');
-                            // $('.testupdate').append(data);
                             if (data == "emailerror") {
                                 $('#emailErr').html("Email already exist");
                             } else if (data == "admin") {
@@ -297,6 +300,10 @@ $(document).ready(function () {
         }
     });
 
+    $('.forgot').click(function () {
+        alert('sssss');
+    });
+
 });
 // <!-- script for delete confirmation -->
 function confirmation() {
@@ -305,6 +312,8 @@ function confirmation() {
         return false;
     }
 }
+
+
 
 // function myreset() {
 //     var removeinput = document.getElementsByClassName('form-control');

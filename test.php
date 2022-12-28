@@ -1,0 +1,1 @@
+'first_name' => $fname , 'last_name' => $lname , 'email' => $email , 'phone_number' => $phone , 'password' => $password , 'gender' => $gender , 'file' => $file , 'modified_date' => $modified_date

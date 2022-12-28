@@ -8,20 +8,18 @@ $fnameErr = $lnameErr = $emailErr = $phoneErr = $passwordErr = $cpasswordErr = $
 $errorcheck = 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $errorcheck = 0;
     $modified_date = date("l jS \of F Y h:i:s A");
     $email2 = trim($_POST['email2']);
-    $sql = "SELECT * FROM `users` WHERE `email` = '$email2'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_row($result);
-    // $fname = $row[1];
-    // $lname = $row[2];
-    // $email2 = $row[3];
-    // $phone = $row[4];
-    // $password = $row[5];
-    // $gender = $row[6];
-    $file2 = $row[7];
+
+
+    $b = new Users();
+    $b->selectByEmail("users", "*", $email2);
+    $result = $b->sql;
+
+    $row = mysqli_fetch_assoc($result);
+    $file2 = $row['file'];
+    $id3 = $row['id'];
 
 
     // file validation
@@ -78,8 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // email validation
     $email = trim($_POST['email']);
-    $sql = " SELECT * FROM `users` WHERE `email` = '$email'";
-    $result = mysqli_query($conn, $sql);
+    $ee = new Users();
+    $ee->emailExist('users', ['email' => $email]);
+    $result = $ee->sql;
+    $num = mysqli_num_rows($result);
     $num = mysqli_num_rows($result);
     if (empty($email)) {
         // $emailErr = "Please enter your email";
@@ -97,6 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+
     // phone number validation
     $phone = trim($_POST['phone']);
     if (empty($phone)) {
@@ -113,63 +114,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errorcheck = 1;
     }
 
-    // password validation
-    $password = trim($_POST['password']);
-    if (empty($password)) {
-        $passwordErr = "Please enter your password";
-        echo "Please enter your password";
-        $errorcheck = 1;
-    }
-
-    // confirm password validation
-    $cpassword = trim($_POST['cpassword']);
-    if (empty($cpassword)) {
-        // $cpasswordErr = "Please enter your confirm password";
-        echo "Please enter your confirm password";
-        $errorcheck = 1;
-    } elseif ($password != $cpassword) {
-        // $cpasswordErr = "confirm password not matched with password";
-        echo "confirm password not matched with password";
-        $errorcheck = 1;
-    }
-
     // gender validation
     $gender = trim($_POST['gender']);
     if (empty($gender)) {
-        // $genderErr = "Please select your gender";
         echo "Please select your gender";
         $errorcheck = 1;
     }
 
     if ($errorcheck == 0) {
 
-        // $sql = "INSERT INTO user (name, email, city) 
         if (!empty($file)) {
             move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
         } else {
             $file = $file2;
         }
-        
-        $sql = "UPDATE `users` SET `first_name` = '$fname', `last_name` = '$lname', `email` = '$email', `phone_number` = '$phone', `password` = '$password', `gender` = '$gender', `file` = '$file', `modified_date` = '$modified_date' where `email` = '$email2'";
-        $result = mysqli_query($conn, $sql);
-
+        $r = new Users();
+        $r->update('users', ['first_name' => $fname, 'last_name' => $lname, 'email' => $email, 'phone_number' => $phone, 'gender' => $gender, 'file' => $file, 'modified_date' => $modified_date], $id3);
+        $result = $r->sql;
         if ($result) {
-            // header("location: users.php?success=1");
-            // echo '<img src="' . $target_file . '" alt=""><br><br>';
-            // echo "<p>First Name : ". $fname. "</p>";
-            // echo "<p>Last Name : ". $lname. "</p>";
-            // echo "<p>Email : ". $email. "</p>";
-            // echo "<p>Phone Number : ". $phone. "</p>";
-            // echo "<p>Gender : ". $gender. "</p>";
-            // echo '
-            // <div class="alert alert-success alert-dismissible fade show" role="alert">
-            //     <span>Data updated successfully</span>
-            //     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            // </div>
-            // ';
-            if(isset($_SESSION['admin'])){
+            if (isset($_SESSION['admin'])) {
                 echo 'admin';
-            }elseif(isset($_SESSION['client'])){
+            } elseif (isset($_SESSION['client'])) {
                 echo 'client';
             }
         } else {

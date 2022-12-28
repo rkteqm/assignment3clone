@@ -1,10 +1,10 @@
 <?php
 include_once("conn.php");
-// $sql = "SELECT id, email, first_name, last_name, file, phone_number FROM users LIMIT 20";
-$sql = "SELECT id, email, first_name, last_name, file, phone_number FROM users";
-$resultset = mysqli_query($conn, $sql) or die("database error:" . mysqli_error($conn));
+$b = new Users();
+$b->select("users","*");
+$result = $b->sql;
 $data = array();
-while ($rows = mysqli_fetch_assoc($resultset)) {
+while ($rows = mysqli_fetch_assoc($result)) {
     $data[] = $rows;
 }
 $results = array(
