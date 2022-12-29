@@ -80,9 +80,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <?php
   require_once 'navbar.php';
   if ($showError == 1) {
-  ?>
+    ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <span><?php echo $validErr ?></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php
+  }
+  if ($_REQUEST['reset'] == 1) {
+    ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <span>Your password has been reseted successfully</span>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <?php

@@ -154,9 +154,6 @@ $(document).ready(function () {
                     processData: false, // tell jQuery not to process the data
                     contentType: false, // tell jQuery not to set contentType
                     success: function (data) {
-                        // $('.test').html('');
-                        // $('.test').append(data);
-                        // myreset();
                         if (data == "emailerror") {
                             $('#emailErr').html("Email already exist");
                         } else {
@@ -284,10 +281,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.forgot').click(function () {
-        alert('sssss');
-    });
-
 });
 // <!-- script for delete confirmation -->
 function confirmation() {
@@ -297,11 +290,3 @@ function confirmation() {
     }
 }
 
-
-
-// function myreset() {
-//     var removeinput = document.getElementsByClassName('form-control');
-//     for (i = 0; i < removeinput.length; i++) {
-//         removeinput[i].value = "";
-//     }
-// }

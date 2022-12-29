@@ -57,7 +57,7 @@ $(document).ready(function() {
           success: function(respone) {
 
             if (respone == 0) {
-              $('#emailErrf').html("Your email is not register");
+              $('#emailErrf').html("If you are register with us you will receive reset mail");
             } else {
               id = respone;
               $("body").css({

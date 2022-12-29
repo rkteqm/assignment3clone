@@ -1,14 +1,17 @@
 <?php
 require_once 'conn.php';
 $id = $_REQUEST['id'];
+
 $g = new Users();
 $g->getResetId('reset', '*', $id);
 $result = $g->sql;
 $num = mysqli_num_rows($result);
+
 if ($num > 0) {
 } else {
     header("location: login.php");
 }
+
 if (isset($_POST['reset'])) {
     $errorcheck = 0;
     // password validation
@@ -37,7 +40,9 @@ if (isset($_POST['reset'])) {
             $u->updateResetId('reset', ['flag' => 0], $id);
             $result = $u->sql;
             if ($result) {
-                header("location: logout.php");
+                session_unset();
+                session_destroy();
+                header('location: login.php?reset=1');
             }
         }
     }

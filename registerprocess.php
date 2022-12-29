@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             ';
     } else {
-        echo mysqli_error($conn);
+        echo "error";
     }
 }
 }
